@@ -13,7 +13,7 @@ client.on('ready', () => {
 client.on('messageCreate', async (message) => {
   if (message.author.bot) return;
 
-  if (message.channel.name !== "⌊📝⌉-thai-airways-ai") return;
+  if (message.channel.name !== "⌊🤖⌉-thai-airways-ai") return;
 
   // ⭐ ใช้ AI ตรงนี้
   const reply = await getAIResponse(message.content);
