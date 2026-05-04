@@ -1,5 +1,19 @@
 const { getGeneralData, getFlights } = require('./database');
 
+function getDate(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().split('T')[0];
+}
+
+function formatDateTH(dateStr) {
+  return new Date(dateStr).toLocaleDateString('th-TH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('th-TH');
 }
@@ -28,6 +42,41 @@ async function getAIResponse(q) {
 
   const general = getGeneralData();
   const flights = getFlights();
+
+  q = q.toLowerCase();
+
+// ✅ ถาม "พรุ่งนี้"
+if (q.includes("พรุ่งนี้") || q.includes("tomorrow")) {
+  const todayStr = getDate(0);
+  const tomorrowStr = getDate(1);
+
+  const tomorrowFlights = flights.filter(f => f.date === tomorrowStr);
+
+  if (tomorrowFlights.length > 0) {
+    let msg = `สวัสดีค่ะ ทางฝ่ายบริการลูกค้า Thai Airways ✈️
+
+📅 วันนี้: ${formatDateTH(todayStr)}
+📅 วันพรุ่งนี้: ${formatDateTH(tomorrowStr)}
+
+สำหรับเที่ยวบินใน "วันพรุ่งนี้" มีรายละเอียดดังนี้ค่ะ:\n`;
+
+    tomorrowFlights.forEach(f => {
+      msg += `\n✈️ เที่ยวบิน ${f.flightNumber}
+🛫 ${f.from} → 🛬 ${f.to}
+⏰ เวลา ${f.time}`;
+    });
+
+    msg += `\n\nหากต้องการจองหรือสอบถามเพิ่มเติม สามารถแจ้งได้เลยนะคะ 💜`;
+    return msg;
+  } else {
+    return `สวัสดีค่ะ ทางฝ่ายบริการลูกค้า Thai Airways ✈️
+
+📅 วันนี้: ${formatDateTH(todayStr)}
+📅 วันพรุ่งนี้: ${formatDateTH(tomorrowStr)}
+
+ขออภัยค่ะ ในวันพรุ่งนี้ยังไม่มีเที่ยวบินให้บริการ 😔`;
+  }
+}
 
   // ✅ FAQ
   for (let g of general) {
