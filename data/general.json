@@ -6,5 +6,9 @@
   {
     "keywords": ["ซื้อ", "ซื้อยังไง", "ซื้อของ"],
     "answer": "https://media.discordapp.net/attachments/1252239656465072170/1488917608878313573/1.png?ex=69f95ed4&is=69f80d54&hm=0d8cfbe9198834da77fd3c464a2fc19a80afe3e571b3fe0b858e40b4b9ef6764&=&format=webp&quality=lossless&width=1522&height=856"
+  },
+  {
+    "keywords": ["จอง", "จองตั๋ว"],
+    "answer": "ขออภัยค่ะ ในขณะนี้ทางเรายังไม่ได้เปิดให้จองตั๋วล่วงหน้า ขออภัยในความไม่สะดวกค่ะ"
   }
 ]
